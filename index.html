@@ -5,23 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Emmanuel Gospel Centre | EGC Church</title>
   
+  <!-- Tailwind CSS Play CDN (v4) - Must be in <head> -->
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  
+  <!-- Font Awesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   
-  <script>
-    function initTailwind() {
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              primary: '#0A3D62',
-              accent: '#D4A017',
-            }
-          }
-        }
-      }
-    }
-  </script>
+  <!-- Favicon placeholder (optional) -->
+  <link rel="icon" href="data:,">
 </head>
 <body class="bg-zinc-50 font-sans overflow-x-hidden">
 
@@ -33,23 +24,23 @@
         <div class="flex items-center gap-x-3">
           <div class="w-9 h-9 bg-amber-500 rounded-full flex items-center justify-center text-white text-2xl">✝</div>
           <div class="leading-none">
-            <span class="font-bold text-xl tracking-tighter text-primary">EMMANUEL</span>
+            <span class="font-bold text-xl tracking-tighter text-[#0A3D62]">EMMANUEL</span>
             <span class="block text-[10px] text-amber-600 font-medium">GOSPEL CENTRE</span>
           </div>
         </div>
 
         <!-- Desktop Menu -->
         <div class="hidden md:flex items-center gap-x-8 text-sm font-medium">
-          <a href="index.html" class="hover:text-accent transition-colors">HOME</a>
-          <a href="#" class="hover:text-accent transition-colors">LIVE STREAM</a>
-          <a href="sermons.html" class="hover:text-accent transition-colors">SERMONS</a>
-          <a href="#" class="hover:text-accent transition-colors">NOTICE BOARD</a>
-          <a href="#" class="hover:text-accent transition-colors">CONTACT</a>
+          <a href="index.html" class="hover:text-amber-600 transition-colors">HOME</a>
+          <a href="#" class="hover:text-amber-600 transition-colors">LIVE STREAM</a>
+          <a href="sermons.html" class="hover:text-amber-600 transition-colors">SERMONS</a>
+          <a href="#" class="hover:text-amber-600 transition-colors">NOTICE BOARD</a>
+          <a href="#" class="hover:text-amber-600 transition-colors">CONTACT</a>
         </div>
 
         <!-- Member Login -->
         <button onclick="window.location.href='login.html'" 
-                class="hidden md:block bg-accent hover:bg-amber-600 text-white px-6 py-2.5 rounded-full text-sm font-medium transition-all">
+                class="hidden md:block bg-amber-500 hover:bg-amber-600 text-white px-6 py-2.5 rounded-full text-sm font-medium transition-all">
           Member Login
         </button>
 
@@ -63,21 +54,21 @@
     <!-- Mobile Menu -->
     <div id="mobile-menu" class="hidden md:hidden bg-white border-t py-6">
       <div class="flex flex-col px-6 space-y-6 text-base font-medium">
-        <a href="index.html" class="hover:text-accent">HOME</a>
-        <a href="#" class="hover:text-accent">LIVE STREAM</a>
-        <a href="sermons.html" class="hover:text-accent">SERMONS</a>
-        <a href="#" class="hover:text-accent">NOTICE BOARD</a>
-        <a href="#" class="hover:text-accent">CONTACT</a>
+        <a href="index.html" class="hover:text-amber-600">HOME</a>
+        <a href="#" class="hover:text-amber-600">LIVE STREAM</a>
+        <a href="sermons.html" class="hover:text-amber-600">SERMONS</a>
+        <a href="#" class="hover:text-amber-600">NOTICE BOARD</a>
+        <a href="#" class="hover:text-amber-600">CONTACT</a>
         
         <button onclick="window.location.href='login.html'" 
-                class="bg-accent text-white py-4 rounded-full font-medium mt-4">
+                class="bg-amber-500 text-white py-4 rounded-full font-medium mt-4">
           Member Login
         </button>
       </div>
     </div>
   </nav>
 
-  <!-- HERO WITH VIDEO BACKGROUND -->
+  <!-- HERO WITH VIDEO -->
   <header class="relative h-screen flex items-center justify-center text-center text-white overflow-hidden">
     
     <!-- Video Background -->
@@ -86,20 +77,19 @@
            autoplay 
            muted 
            loop 
-           playsinline 
-           poster="https://via.placeholder.com/1920x1080/0A3D62/FFFFFF?text=Loading+Hero">
+           playsinline>
       <source src="assets/videos/CloudVideo.mp4" type="video/mp4">
       Your browser does not support the video tag.
     </video>
 
-    <!-- Dark Overlay -->
-    <div class="absolute inset-0 bg-black/60"></div>
+    <!-- Dark Overlay for readability -->
+    <div class="absolute inset-0 bg-black/65"></div>
 
     <!-- Content -->
     <div class="relative z-10 max-w-5xl mx-auto px-6 pt-12">
       <p class="uppercase tracking-[4px] text-amber-200 text-sm mb-6">Welcome to</p>
       
-      <h1 class="text-5xl md:text-7xl font-bold leading-none tracking-tighter drop-shadow-lg">
+      <h1 class="text-5xl md:text-7xl font-bold leading-none tracking-tighter drop-shadow-2xl">
         EMMANUEL<br>
         <span class="text-4xl md:text-5xl block mt-4">- GOSPEL CENTRE -</span>
       </h1>
@@ -110,6 +100,30 @@
     </div>
   </header>
 
-  <script src="js/main.js"></script>
+  <script>
+    // Wait for Tailwind to load before running config or any script
+    function init() {
+      // Mobile menu
+      const mobileBtn = document.getElementById('mobile-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+      
+      if (mobileBtn && mobileMenu) {
+        mobileBtn.addEventListener('click', () => {
+          mobileMenu.classList.toggle('hidden');
+        });
+      }
+
+      // Hero video fallback
+      const video = document.getElementById('hero-video');
+      if (video) {
+        video.play().catch(err => {
+          console.log("Video autoplay blocked:", err);
+        });
+      }
+    }
+
+    // Run after everything loads
+    window.addEventListener('load', init);
+  </script>
 </body>
 </html>
