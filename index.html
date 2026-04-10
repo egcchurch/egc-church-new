@@ -5,38 +5,105 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Emmanuel Gospel Centre | EGC Church</title>
   
-  <!-- Tailwind CSS Play CDN (for development) -->
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-  
-  <!-- Font Awesome for icons (hamburger, etc.) -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   
-  <style>
-    .hero-bg {
-      background: linear-gradient(rgba(10, 61, 98, 0.8), rgba(30, 107, 140, 0.7)), 
-                  url('https://via.placeholder.com/1920x1080/0A3D62/FFFFFF?text=Hero+Cloud+Image') center/cover no-repeat fixed;
+  <script>
+    function initTailwind() {
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: '#0A3D62',
+              accent: '#D4A017',
+            }
+          }
+        }
+      }
     }
-    .gold { color: #D4A017; }
-  </style>
+  </script>
 </head>
-<body class="bg-gray-50 font-sans">
+<body class="bg-zinc-50 font-sans">
 
-  <!-- Navigation will go here (I'll give you the full version next) -->
+  <!-- NAVIGATION -->
+  <nav class="bg-white border-b sticky top-0 z-50 shadow-sm">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="flex justify-between items-center h-16">
+        <!-- Logo -->
+        <div class="flex items-center gap-x-3">
+          <div class="w-9 h-9 bg-amber-500 rounded-full flex items-center justify-center text-white text-2xl">✝</div>
+          <div>
+            <span class="font-bold text-xl tracking-tighter text-primary">EMMANUEL</span>
+            <span class="block text-[10px] text-amber-600 -mt-1">GOSPEL CENTRE</span>
+          </div>
+        </div>
 
-  <!-- Hero Section -->
-  <header class="hero-bg h-screen flex items-center justify-center text-center text-white">
-    <div class="max-w-4xl mx-auto px-6">
+        <!-- Desktop Menu -->
+        <div class="hidden md:flex items-center gap-x-8 text-sm font-medium">
+          <a href="index.html" class="hover:text-accent transition-colors">HOME</a>
+          <a href="#" class="hover:text-accent transition-colors">LIVE STREAM</a>
+          <a href="#" class="hover:text-accent transition-colors">SERMONS</a>
+          <a href="#" class="hover:text-accent transition-colors">NOTICE BOARD</a>
+          <a href="#" class="hover:text-accent transition-colors">CONTACT</a>
+        </div>
+
+        <!-- Member Login Button -->
+        <button onclick="window.location.href='login.html'" 
+                class="hidden md:block bg-accent hover:bg-amber-600 text-white px-6 py-2 rounded-full text-sm font-medium transition-colors">
+          Member Login
+        </button>
+
+        <!-- Mobile Hamburger -->
+        <button id="mobile-btn" class="md:hidden text-2xl text-gray-700">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-t py-4">
+      <div class="flex flex-col px-6 space-y-5 text-base">
+        <a href="index.html" class="hover:text-accent">HOME</a>
+        <a href="#" class="hover:text-accent">LIVE STREAM</a>
+        <a href="sermons.html" class="hover:text-accent">SERMONS</a>
+        <a href="#" class="hover:text-accent">NOTICE BOARD</a>
+        <a href="#" class="hover:text-accent">CONTACT</a>
+        <button onclick="window.location.href='login.html'" 
+                class="bg-accent text-white py-3 rounded-full font-medium mt-6">
+          Member Login
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero-bg min-h-[100dvh] flex items-center justify-center text-center text-white">
+    <div class="max-w-5xl mx-auto px-6">
       <p class="uppercase tracking-[4px] text-amber-200 text-sm mb-6">Welcome to</p>
-      <h1 class="text-5xl md:text-7xl font-bold leading-none tracking-tight">
+      <h1 class="text-5xl md:text-7xl font-bold leading-none tracking-tighter">
         EMMANUEL<br>
-        <span class="text-4xl md:text-5xl block mt-3">- GOSPEL CENTRE -</span>
+        <span class="text-4xl md:text-5xl block mt-4">- GOSPEL CENTRE -</span>
       </h1>
-      <p class="mt-10 text-xl md:text-2xl max-w-lg mx-auto">May the Lord richly bless you</p>
+      <p class="mt-10 text-xl md:text-2xl max-w-md mx-auto text-amber-100">
+        May the Lord richly bless you
+      </p>
     </div>
   </header>
 
   <script>
-    // Tailwind script runs automatically
+    initTailwind();
+
+    // Mobile menu
+    const mobileBtn = document.getElementById('mobile-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
   </script>
+
+  <style>
+    .hero-bg {
+      background: linear-gradient(rgba(10, 61, 98, 0.78), rgba(30, 107, 140, 0.68)), 
+                  url('https://egcchurch.github.io/egc-church-new/assets/images/hero.jpg') center/cover no-repeat;
+    }
+  </style>
 </body>
 </html>
