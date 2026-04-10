@@ -3,83 +3,78 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Emmanuel Gospel Centre | EGC Church</title>
+  <title>Member Login | Emmanuel Gospel Centre</title>
   
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   
-  <link rel="icon" href="data:,">
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
 </head>
-<body class="bg-zinc-50 font-sans overflow-x-hidden">
+<body class="bg-zinc-100 min-h-screen flex items-center justify-center font-sans">
 
-  <!-- NAVIGATION -->
-  <nav class="bg-white border-b sticky top-0 z-50 shadow-sm">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="flex justify-between items-center h-16">
-        <div class="flex items-center gap-x-3">
-          <div class="w-9 h-9 bg-amber-500 rounded-full flex items-center justify-center text-white text-2xl">✝</div>
-          <div class="leading-none">
-            <span class="font-bold text-xl tracking-tighter text-[#0A3D62]">EMMANUEL</span>
-            <span class="block text-[10px] text-amber-600 font-medium">GOSPEL CENTRE</span>
-          </div>
-        </div>
+  <div class="max-w-md w-full mx-4">
+    <div class="bg-white rounded-3xl shadow-2xl p-8 md:p-10">
+      
+      <!-- Logo -->
+      <div class="flex justify-center mb-8">
+        <div class="w-16 h-16 bg-amber-500 rounded-2xl flex items-center justify-center text-white text-4xl shadow-inner">✝</div>
+      </div>
 
-        <div class="hidden md:flex items-center gap-x-8 text-sm font-medium">
-          <a href="index.html" class="hover:text-amber-600 transition-colors">HOME</a>
-          <a href="#" class="hover:text-amber-600 transition-colors">LIVE STREAM</a>
-          <a href="sermons.html" class="hover:text-amber-600 transition-colors">SERMONS</a>
-          <a href="#" class="hover:text-amber-600 transition-colors">NOTICE BOARD</a>
-          <a href="#" class="hover:text-amber-600 transition-colors">CONTACT</a>
-        </div>
+      <h1 class="text-3xl font-bold text-center text-[#0A3D62] mb-2">Member Login</h1>
+      <p class="text-center text-gray-600 mb-8">Sign in to access members-only content</p>
 
-        <button onclick="window.location.href='login.html'" 
-                class="hidden md:block bg-amber-500 hover:bg-amber-600 text-white px-6 py-2.5 rounded-full text-sm font-medium">
-          Member Login
+      <!-- Social Login Buttons -->
+      <div class="space-y-3 mb-8">
+        <button onclick="signInWithGoogle()" 
+                class="w-full flex items-center justify-center gap-3 bg-white border border-gray-300 hover:border-gray-400 py-4 rounded-2xl font-medium transition-all active:scale-[0.98]">
+          <i class="fab fa-google text-red-500 text-xl"></i>
+          Continue with Google
         </button>
 
-        <button id="mobile-btn" class="md:hidden text-3xl text-gray-700">
-          <i class="fas fa-bars"></i>
+        <button onclick="signInWithFacebook()" 
+                class="w-full flex items-center justify-center gap-3 bg-[#1877F2] text-white py-4 rounded-2xl font-medium transition-all active:scale-[0.98]">
+          <i class="fab fa-facebook-f text-xl"></i>
+          Continue with Facebook
         </button>
+      </div>
+
+      <div class="relative my-6">
+        <div class="absolute inset-0 flex items-center">
+          <div class="w-full border-t border-gray-200"></div>
+        </div>
+        <div class="relative flex justify-center">
+          <span class="bg-white px-4 text-xs uppercase tracking-widest text-gray-400">or sign in with email</span>
+        </div>
+      </div>
+
+      <!-- Email Login Form -->
+      <form id="email-form" class="space-y-4">
+        <div>
+          <input type="email" id="email" placeholder="Email address" 
+                 class="w-full px-5 py-4 border border-gray-300 rounded-2xl focus:outline-none focus:border-amber-500 text-base">
+        </div>
+        <div>
+          <input type="password" id="password" placeholder="Password" 
+                 class="w-full px-5 py-4 border border-gray-300 rounded-2xl focus:outline-none focus:border-amber-500 text-base">
+        </div>
+        <button type="submit" 
+                class="w-full bg-amber-500 hover:bg-amber-600 text-white py-4 rounded-2xl font-semibold transition-all">
+          Sign In
+        </button>
+      </form>
+
+      <div class="mt-6 text-center text-sm">
+        <a href="#" onclick="showRegister()" class="text-amber-600 hover:underline">Don't have an account? Register here</a>
       </div>
     </div>
 
-    <!-- Mobile Menu -->
-    <div id="mobile-menu" class="hidden md:hidden bg-white border-t py-6">
-      <div class="flex flex-col px-6 space-y-6 text-base font-medium">
-        <a href="index.html" class="hover:text-amber-600">HOME</a>
-        <a href="#" class="hover:text-amber-600">LIVE STREAM</a>
-        <a href="sermons.html" class="hover:text-amber-600">SERMONS</a>
-        <a href="#" class="hover:text-amber-600">NOTICE BOARD</a>
-        <a href="#" class="hover:text-amber-600">CONTACT</a>
-        <button onclick="window.location.href='login.html'" 
-                class="bg-amber-500 text-white py-4 rounded-full font-medium mt-4">
-          Member Login
-        </button>
-      </div>
-    </div>
-  </nav>
+    <p class="text-center text-gray-500 text-xs mt-10">© Emmanuel Gospel Centre</p>
+  </div>
 
-  <!-- HERO VIDEO -->
-  <header class="relative h-screen flex items-center justify-center text-center text-white overflow-hidden">
-    <video id="hero-video" 
-           class="absolute inset-0 w-full h-full object-cover" 
-           autoplay muted loop playsinline>
-      <source src="assets/videos/CloudVideo.mp4" type="video/mp4">
-    </video>
-    <div class="absolute inset-0 bg-black/65"></div>
-
-    <div class="relative z-10 max-w-5xl mx-auto px-6">
-      <p class="uppercase tracking-[4px] text-amber-200 text-sm mb-6">Welcome to</p>
-      <h1 class="text-5xl md:text-7xl font-bold leading-none tracking-tighter drop-shadow-2xl">
-        EMMANUEL<br>
-        <span class="text-4xl md:text-5xl block mt-4">- GOSPEL CENTRE -</span>
-      </h1>
-      <p class="mt-10 text-xl md:text-2xl max-w-md mx-auto text-amber-100">
-        May the Lord richly bless you
-      </p>
-    </div>
-  </header>
-
-  <script src="js/main.js"></script>
+  <!-- Firebase Config + Auth Script -->
+  <script src="firebase-config.js"></script>
+  <script src="js/auth.js"></script>
 </body>
 </html>
