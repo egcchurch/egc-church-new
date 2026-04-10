@@ -1,6 +1,5 @@
 // js/main.js
 
-// Initialize Tailwind and everything when page loads
 document.addEventListener('DOMContentLoaded', () => {
   
   // Mobile menu toggle
@@ -13,63 +12,84 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Hero video - ensure it plays
+  // Hero video
   const video = document.getElementById('hero-video');
   if (video) {
-    video.play().catch(err => {
-      console.log("Video autoplay prevented by browser:", err);
-    });
+    video.play().catch(() => console.log("Video autoplay prevented"));
   }
 
-  // Check Firebase Auth State
+  // Check login state
   checkAuthState();
 });
 
-// ==================== AUTH STATE MANAGEMENT ====================
+// ==================== AUTH STATE MANAGEMENT (Desktop + Mobile) ====================
 function checkAuthState() {
-  // Make sure Firebase is loaded
   if (typeof firebase === 'undefined' || typeof auth === 'undefined') {
-    console.log("Firebase not loaded on this page");
+    console.log("Firebase not loaded");
     return;
   }
 
   auth.onAuthStateChanged((user) => {
-    const loginBtn = document.getElementById('login-btn');
-    
-    if (user) {
-      // User is logged in
-      console.log("User logged in:", user.email);
-      
-      if (loginBtn) {
-        loginBtn.innerHTML = `
-          Welcome, ${user.displayName ? user.displayName.split(' ')[0] : 'Member'} 
-          <span class="text-xs block text-amber-200">(${user.email})</span>
-        `;
-        loginBtn.classList.remove('bg-amber-500', 'hover:bg-amber-600');
-        loginBtn.classList.add('bg-green-600', 'hover:bg-green-700', 'cursor-default');
-        loginBtn.onclick = logoutUser;
-      }
-    } else {
-      // User is logged out
-      if (loginBtn) {
-        loginBtn.innerHTML = 'Member Login';
-        loginBtn.classList.remove('bg-green-600', 'hover:bg-green-700', 'cursor-default');
-        loginBtn.classList.add('bg-amber-500', 'hover:bg-amber-600');
-        loginBtn.onclick = () => window.location.href = 'login.html';
-      }
-    }
+    updateLoginButtons(user);
   });
+}
+
+function updateLoginButtons(user) {
+  // Desktop button
+  const desktopBtn = document.getElementById('login-btn');
+  
+  // Mobile button inside hamburger menu
+  const mobileBtn = document.getElementById('mobile-login-btn');
+
+  if (user) {
+    // === USER IS LOGGED IN ===
+    const displayName = user.displayName ? user.displayName.split(' ')[0] : 'Member';
+
+    // Update Desktop Button
+    if (desktopBtn) {
+      desktopBtn.innerHTML = `
+        Welcome, ${displayName}
+        <span class="text-xs block text-amber-200">(${user.email})</span>
+      `;
+      desktopBtn.classList.remove('bg-amber-500', 'hover:bg-amber-600');
+      desktopBtn.classList.add('bg-green-600', 'hover:bg-green-700', 'cursor-default');
+      desktopBtn.onclick = logoutUser;
+    }
+
+    // Update Mobile Button
+    if (mobileBtn) {
+      mobileBtn.innerHTML = `Welcome, ${displayName} <span class="text-xs block">(${user.email})</span>`;
+      mobileBtn.classList.remove('bg-amber-500');
+      mobileBtn.classList.add('bg-green-600');
+      mobileBtn.onclick = logoutUser;
+    }
+
+  } else {
+    // === USER IS LOGGED OUT ===
+    if (desktopBtn) {
+      desktopBtn.textContent = 'Member Login';
+      desktopBtn.classList.remove('bg-green-600', 'hover:bg-green-700', 'cursor-default');
+      desktopBtn.classList.add('bg-amber-500', 'hover:bg-amber-600');
+      desktopBtn.onclick = () => window.location.href = 'login.html';
+    }
+
+    if (mobileBtn) {
+      mobileBtn.textContent = 'Member Login';
+      mobileBtn.classList.remove('bg-green-600');
+      mobileBtn.classList.add('bg-amber-500');
+      mobileBtn.onclick = () => window.location.href = 'login.html';
+    }
+  }
 }
 
 // Logout function
 function logoutUser() {
   if (confirm("Are you sure you want to logout?")) {
     auth.signOut().then(() => {
-      console.log("User signed out");
       window.location.href = "index.html";
     }).catch((error) => {
       console.error("Logout error:", error);
-      alert("Logout failed. Please try again.");
+      alert("Failed to logout. Please try again.");
     });
   }
 }
