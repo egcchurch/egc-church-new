@@ -5,13 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Emmanuel Gospel Centre | EGC Church</title>
   
-  <!-- Tailwind CSS Play CDN (v4) - Must be in <head> -->
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-  
-  <!-- Font Awesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   
-  <!-- Favicon placeholder (optional) -->
   <link rel="icon" href="data:,">
 </head>
 <body class="bg-zinc-50 font-sans overflow-x-hidden">
@@ -20,7 +16,6 @@
   <nav class="bg-white border-b sticky top-0 z-50 shadow-sm">
     <div class="max-w-7xl mx-auto px-6">
       <div class="flex justify-between items-center h-16">
-        <!-- Logo -->
         <div class="flex items-center gap-x-3">
           <div class="w-9 h-9 bg-amber-500 rounded-full flex items-center justify-center text-white text-2xl">✝</div>
           <div class="leading-none">
@@ -29,7 +24,6 @@
           </div>
         </div>
 
-        <!-- Desktop Menu -->
         <div class="hidden md:flex items-center gap-x-8 text-sm font-medium">
           <a href="index.html" class="hover:text-amber-600 transition-colors">HOME</a>
           <a href="#" class="hover:text-amber-600 transition-colors">LIVE STREAM</a>
@@ -38,14 +32,12 @@
           <a href="#" class="hover:text-amber-600 transition-colors">CONTACT</a>
         </div>
 
-        <!-- Member Login -->
         <button onclick="window.location.href='login.html'" 
-                class="hidden md:block bg-amber-500 hover:bg-amber-600 text-white px-6 py-2.5 rounded-full text-sm font-medium transition-all">
+                class="hidden md:block bg-amber-500 hover:bg-amber-600 text-white px-6 py-2.5 rounded-full text-sm font-medium">
           Member Login
         </button>
 
-        <!-- Hamburger -->
-        <button id="mobile-btn" class="md:hidden text-3xl text-gray-700 focus:outline-none">
+        <button id="mobile-btn" class="md:hidden text-3xl text-gray-700">
           <i class="fas fa-bars"></i>
         </button>
       </div>
@@ -59,7 +51,6 @@
         <a href="sermons.html" class="hover:text-amber-600">SERMONS</a>
         <a href="#" class="hover:text-amber-600">NOTICE BOARD</a>
         <a href="#" class="hover:text-amber-600">CONTACT</a>
-        
         <button onclick="window.location.href='login.html'" 
                 class="bg-amber-500 text-white py-4 rounded-full font-medium mt-4">
           Member Login
@@ -68,62 +59,27 @@
     </div>
   </nav>
 
-  <!-- HERO WITH VIDEO -->
+  <!-- HERO VIDEO -->
   <header class="relative h-screen flex items-center justify-center text-center text-white overflow-hidden">
-    
-    <!-- Video Background -->
     <video id="hero-video" 
            class="absolute inset-0 w-full h-full object-cover" 
-           autoplay 
-           muted 
-           loop 
-           playsinline>
+           autoplay muted loop playsinline>
       <source src="assets/videos/CloudVideo.mp4" type="video/mp4">
-      Your browser does not support the video tag.
     </video>
-
-    <!-- Dark Overlay for readability -->
     <div class="absolute inset-0 bg-black/65"></div>
 
-    <!-- Content -->
-    <div class="relative z-10 max-w-5xl mx-auto px-6 pt-12">
+    <div class="relative z-10 max-w-5xl mx-auto px-6">
       <p class="uppercase tracking-[4px] text-amber-200 text-sm mb-6">Welcome to</p>
-      
       <h1 class="text-5xl md:text-7xl font-bold leading-none tracking-tighter drop-shadow-2xl">
         EMMANUEL<br>
         <span class="text-4xl md:text-5xl block mt-4">- GOSPEL CENTRE -</span>
       </h1>
-      
-      <p class="mt-10 text-xl md:text-2xl max-w-md mx-auto text-amber-100 drop-shadow">
+      <p class="mt-10 text-xl md:text-2xl max-w-md mx-auto text-amber-100">
         May the Lord richly bless you
       </p>
     </div>
   </header>
 
-  <script>
-    // Wait for Tailwind to load before running config or any script
-    function init() {
-      // Mobile menu
-      const mobileBtn = document.getElementById('mobile-btn');
-      const mobileMenu = document.getElementById('mobile-menu');
-      
-      if (mobileBtn && mobileMenu) {
-        mobileBtn.addEventListener('click', () => {
-          mobileMenu.classList.toggle('hidden');
-        });
-      }
-
-      // Hero video fallback
-      const video = document.getElementById('hero-video');
-      if (video) {
-        video.play().catch(err => {
-          console.log("Video autoplay blocked:", err);
-        });
-      }
-    }
-
-    // Run after everything loads
-    window.addEventListener('load', init);
-  </script>
+  <script src="js/main.js"></script>
 </body>
 </html>
