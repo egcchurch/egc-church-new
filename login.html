@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Member Login | Emmanuel Gospel Centre</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+</head>
+<body class="bg-zinc-100 min-h-screen flex items-center justify-center font-sans">
+  <div class="max-w-md w-full mx-4">
+    <div class="bg-white rounded-3xl shadow-xl p-8">
+      <!-- Logo -->
+      <div class="flex justify-center mb-8">
+        <div class="w-16 h-16 bg-amber-500 rounded-2xl flex items-center justify-center text-white text-4xl">✝</div>
+      </div>
+
+      <h1 class="text-3xl font-bold text-center text-[#0A3D62] mb-2">Member Login</h1>
+      <p class="text-center text-gray-600 mb-8">Sign in to access members-only content</p>
+
+      <!-- Social Logins -->
+      <div class="space-y-3 mb-8">
+        <button onclick="signInWithGoogle()" 
+                class="w-full flex items-center justify-center gap-3 bg-white border border-gray-300 hover:border-gray-400 py-3.5 rounded-2xl font-medium transition">
+          <i class="fab fa-google text-red-500"></i>
+          Continue with Google
+        </button>
+
+        <button onclick="signInWithFacebook()" 
+                class="w-full flex items-center justify-center gap-3 bg-[#1877F2] text-white py-3.5 rounded-2xl font-medium transition">
+          <i class="fab fa-facebook-f"></i>
+          Continue with Facebook
+        </button>
+      </div>
+
+      <div class="relative my-6">
+        <div class="absolute inset-0 flex items-center"><div class="w-full border-t"></div></div>
+        <div class="relative flex justify-center text-xs uppercase tracking-widest text-gray-400">or</div>
+      </div>
+
+      <!-- Email Login -->
+      <form id="email-form" class="space-y-4">
+        <div>
+          <input type="email" id="email" placeholder="Email address" 
+                 class="w-full px-5 py-3.5 border border-gray-300 rounded-2xl focus:outline-none focus:border-amber-500">
+        </div>
+        <div>
+          <input type="password" id="password" placeholder="Password" 
+                 class="w-full px-5 py-3.5 border border-gray-300 rounded-2xl focus:outline-none focus:border-amber-500">
+        </div>
+        <button type="submit" 
+                class="w-full bg-amber-500 hover:bg-amber-600 text-white py-4 rounded-2xl font-medium transition">
+          Sign In with Email
+        </button>
+      </form>
+
+      <div class="mt-6 text-center">
+        <a href="#" onclick="showRegister()" class="text-amber-600 hover:underline text-sm">Don't have an account? Register</a>
+      </div>
+    </div>
+
+    <p class="text-center text-gray-500 text-xs mt-8">Emmanuel Gospel Centre © 2026</p>
+  </div>
+
+  <script src="firebase-config.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>
