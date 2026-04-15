@@ -13,7 +13,7 @@
 </head>
 <body class="bg-zinc-50 font-sans">
 
-  <!-- Navigation -->
+  <!-- Navigation (same as before) -->
   <nav class="bg-white border-b sticky top-0 z-50 shadow-sm">
     <div class="max-w-7xl mx-auto px-6">
       <div class="flex justify-between items-center h-16">
@@ -57,35 +57,53 @@
     </div>
   </nav>
 
-  <!-- Page Header -->
-  <header class="bg-[#0A3D62] text-white py-20">
+  <!-- Header -->
+  <header class="bg-[#0A3D62] text-white py-16">
     <div class="max-w-7xl mx-auto px-6 text-center">
       <h1 class="text-5xl font-bold mb-4">Sermon Archive</h1>
-      <p class="text-amber-200 max-w-lg mx-auto text-lg">
-        "Faith comes by hearing, and hearing by the word of God" — Romans 10:17
-      </p>
+      <p class="text-amber-200 max-w-lg mx-auto">Faith comes by hearing the Word of God</p>
     </div>
   </header>
 
-  <div class="max-w-7xl mx-auto px-6 py-12">
-    <!-- Filters -->
-    <div class="flex flex-col lg:flex-row gap-4 mb-10">
-      <input type="text" id="search-input" 
-             placeholder="Search by title, speaker or scripture..." 
-             class="flex-1 px-6 py-4 border border-gray-300 rounded-3xl focus:outline-none focus:border-amber-500 text-base">
+  <div class="max-w-7xl mx-auto px-6 py-10">
+    <!-- View Toggle + Filters -->
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+      <div class="flex items-center gap-3">
+        <button onclick="setView('card')" id="card-btn"
+                class="px-5 py-2.5 rounded-2xl flex items-center gap-2 font-medium active-view">
+          <i class="fas fa-th-large"></i> Card View
+        </button>
+        <button onclick="setView('table')" id="table-btn"
+                class="px-5 py-2.5 rounded-2xl flex items-center gap-2 font-medium">
+          <i class="fas fa-list"></i> Table View
+        </button>
+      </div>
 
-      <select id="year-filter" class="px-6 py-4 border border-gray-300 rounded-3xl focus:outline-none bg-white">
-        <option value="">All Years</option>
-      </select>
-
-      <select id="speaker-filter" class="px-6 py-4 border border-gray-300 rounded-3xl focus:outline-none bg-white">
-        <option value="">All Speakers</option>
-      </select>
+      <input type="text" id="search-input" placeholder="Search sermons..." 
+             class="flex-1 max-w-md px-6 py-3 border border-gray-300 rounded-3xl focus:outline-none focus:border-amber-500">
     </div>
 
-    <!-- Sermons Grid -->
-    <div id="sermons-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      <!-- Populated by JavaScript -->
+    <!-- Card View -->
+    <div id="card-view" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Populated by JS -->
+    </div>
+
+    <!-- Table View -->
+    <div id="table-view" class="hidden overflow-x-auto">
+      <table class="w-full bg-white rounded-3xl shadow-sm overflow-hidden">
+        <thead class="bg-gray-100">
+          <tr>
+            <th class="text-left px-6 py-4 font-medium">Date</th>
+            <th class="text-left px-6 py-4 font-medium">Speaker</th>
+            <th class="text-left px-6 py-4 font-medium">Title</th>
+            <th class="text-left px-6 py-4 font-medium">Scripture</th>
+            <th class="w-48"></th>
+          </tr>
+        </thead>
+        <tbody id="table-body" class="divide-y">
+          <!-- Populated by JS -->
+        </tbody>
+      </table>
     </div>
   </div>
 
