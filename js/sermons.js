@@ -1,6 +1,5 @@
 // js/sermons.js
 
-// Sample sermons data - you can later move this to Firebase Firestore
 const sermons = [
   {
     id: 1,
@@ -8,7 +7,7 @@ const sermons = [
     date: "2025-04-06",
     speaker: "Pastor John Doe",
     scripture: "2 Corinthians 5:7",
-    audioUrl: "assets/audio/sermon1.mp3",   // Add your MP3 files here later
+    audioUrl: "#",                    // Replace with real MP3 path later
     duration: "45 min"
   },
   {
@@ -17,7 +16,7 @@ const sermons = [
     date: "2025-03-30",
     speaker: "Pastor John Doe",
     scripture: "1 Corinthians 15:12-20",
-    audioUrl: "assets/audio/sermon2.mp3",
+    audioUrl: "#",
     duration: "52 min"
   },
   {
@@ -26,61 +25,88 @@ const sermons = [
     date: "2025-03-23",
     speaker: "Evangelist Mark Smith",
     scripture: "John 1:16",
-    audioUrl: "assets/audio/sermon3.mp3",
+    audioUrl: "#",
     duration: "38 min"
+  },
+  {
+    id: 4,
+    title: "The Just Shall Live by Faith",
+    date: "2025-03-16",
+    speaker: "Pastor John Doe",
+    scripture: "Habakkuk 2:4",
+    audioUrl: "#",
+    duration: "41 min"
   }
-  // Add more sermons here
 ];
 
-// Render sermons
 function renderSermons(filteredSermons) {
   const grid = document.getElementById('sermons-grid');
   grid.innerHTML = '';
 
+  if (filteredSermons.length === 0) {
+    grid.innerHTML = `
+      <div class="col-span-3 text-center py-20">
+        <p class="text-gray-500 text-lg">No sermons found matching your search.</p>
+      </div>`;
+    return;
+  }
+
   filteredSermons.forEach(sermon => {
-    const card = document.createElement('div');
-    card.className = "bg-white rounded-3xl shadow-sm overflow-hidden border border-gray-100 hover:shadow-md transition";
-    card.innerHTML = `
-      <div class="p-6">
-        <div class="flex justify-between items-start mb-4">
-          <div>
-            <p class="text-amber-600 text-sm font-medium">${sermon.date}</p>
-            <h3 class="font-semibold text-lg leading-tight mt-1">${sermon.title}</h3>
+    const cardHTML = `
+      <div class="bg-white rounded-3xl shadow-sm overflow-hidden border border-gray-100 hover:shadow-lg transition-all">
+        <div class="p-7">
+          <div class="flex justify-between mb-4">
+            <span class="text-sm text-amber-600 font-medium">${sermon.date}</span>
+            <span class="text-xs bg-amber-100 text-amber-700 px-3 py-1 rounded-full">${sermon.duration}</span>
           </div>
-        </div>
-        
-        <p class="text-gray-600 text-sm mb-2">${sermon.speaker}</p>
-        <p class="text-amber-700 text-sm font-medium">${sermon.scripture}</p>
-        
-        <div class="mt-6 flex items-center gap-3">
-          <audio controls class="w-full accent-amber-500">
-            <source src="${sermon.audioUrl}" type="audio/mpeg">
-            Your browser does not support the audio element.
-          </audio>
+          
+          <h3 class="font-semibold text-xl leading-tight mb-3">${sermon.title}</h3>
+          
+          <p class="text-gray-600 mb-1">${sermon.speaker}</p>
+          <p class="text-amber-700 text-sm">${sermon.scripture}</p>
+
+          <div class="mt-8">
+            <audio controls class="w-full accent-amber-500 rounded-2xl">
+              <source src="${sermon.audioUrl}" type="audio/mpeg">
+              Your browser does not support audio playback.
+            </audio>
+          </div>
         </div>
       </div>
     `;
-    grid.appendChild(card);
+    grid.innerHTML += cardHTML;
   });
 }
 
-// Simple search and filter
+// Filter function
 function filterSermons() {
-  const searchTerm = document.getElementById('search-input').value.toLowerCase();
-  
-  const filtered = sermons.filter(sermon => 
-    sermon.title.toLowerCase().includes(searchTerm) ||
-    sermon.speaker.toLowerCase().includes(searchTerm) ||
-    sermon.scripture.toLowerCase().includes(searchTerm)
-  );
-  
+  const searchTerm = document.getElementById('search-input').value.toLowerCase().trim();
+  const yearFilter = document.getElementById('year-filter').value;
+  const speakerFilter = document.getElementById('speaker-filter').value;
+
+  let filtered = sermons;
+
+  if (searchTerm) {
+    filtered = filtered.filter(s => 
+      s.title.toLowerCase().includes(searchTerm) ||
+      s.speaker.toLowerCase().includes(searchTerm) ||
+      s.scripture.toLowerCase().includes(searchTerm)
+    );
+  }
+
+  if (speakerFilter) {
+    filtered = filtered.filter(s => s.speaker === speakerFilter);
+  }
+
   renderSermons(filtered);
 }
 
-// Initialize
+// Initialize page
 document.addEventListener('DOMContentLoaded', () => {
   renderSermons(sermons);
-  
-  // Live search
+
+  // Live filtering
   document.getElementById('search-input').addEventListener('input', filterSermons);
+  document.getElementById('year-filter').addEventListener('change', filterSermons);
+  document.getElementById('speaker-filter').addEventListener('change', filterSermons);
 });
