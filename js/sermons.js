@@ -6,7 +6,8 @@ const sermons = [
     title: "Walking by Faith, Not by Sight",
     date: "2025-04-06",
     speaker: "Pastor John Doe",
-    audioUrl: "#",           // ← Replace with real .mp3 path later
+    audioUrl: "assets/audio/sermon1.mp3",        // Put real files here later
+    notesUrl: "assets/notes/sermon1.pdf",        // Optional
     duration: "45 min"
   },
   {
@@ -14,7 +15,8 @@ const sermons = [
     title: "The Power of the Resurrection",
     date: "2025-04-02",
     speaker: "Pastor John Doe",
-    audioUrl: "#",
+    audioUrl: "assets/audio/sermon2.mp3",
+    notesUrl: null,
     duration: "52 min"
   },
   {
@@ -22,16 +24,9 @@ const sermons = [
     title: "Grace Upon Grace",
     date: "2025-03-23",
     speaker: "Evangelist Mark Smith",
-    audioUrl: "#",
+    audioUrl: "assets/audio/sermon3.mp3",
+    notesUrl: "assets/notes/sermon3.pdf",
     duration: "38 min"
-  },
-  {
-    id: 4,
-    title: "The Just Shall Live by Faith",
-    date: "2025-03-16",
-    speaker: "Pastor John Doe",
-    audioUrl: "#",
-    duration: "41 min"
   }
 ];
 
@@ -48,6 +43,25 @@ function setView(view) {
   filterAndRender();
 }
 
+// Resource buttons generator
+function createResourceButtons(sermon) {
+  let html = '';
+
+  if (sermon.audioUrl && sermon.audioUrl !== "#") {
+    html += `<a href="${sermon.audioUrl}" target="_blank" class="resource-btn bg-amber-100 text-amber-700 hover:bg-amber-200">
+               <i class="fas fa-headphones"></i> Audio
+             </a>`;
+  }
+
+  if (sermon.notesUrl) {
+    html += `<a href="${sermon.notesUrl}" target="_blank" class="resource-btn bg-blue-100 text-blue-700 hover:bg-blue-200">
+               <i class="fas fa-file-pdf"></i> Notes
+             </a>`;
+  }
+
+  return html || '<span class="text-gray-400 text-xs">No resources yet</span>';
+}
+
 function renderCardView(filtered) {
   const container = document.getElementById('card-view');
   container.innerHTML = '';
@@ -61,13 +75,18 @@ function renderCardView(filtered) {
             <span class="text-xs bg-amber-100 px-3 py-1 rounded-full">${s.duration}</span>
           </div>
           <h3 class="font-semibold text-xl leading-tight mb-3">${s.title}</h3>
-          <p class="text-gray-600">${s.speaker}</p>
+          <p class="text-gray-600 mb-6">${s.speaker}</p>
 
-          <div class="mt-8">
+          <div class="flex flex-wrap gap-2">
+            ${createResourceButtons(s)}
+          </div>
+
+          ${s.audioUrl ? `
+          <div class="mt-6">
             <audio controls class="w-full accent-amber-500">
               <source src="${s.audioUrl}" type="audio/mpeg">
             </audio>
-          </div>
+          </div>` : ''}
         </div>
       </div>`;
     container.innerHTML += card;
@@ -81,13 +100,11 @@ function renderTableView(filtered) {
   const grouped = groupByMonthYear(filtered);
 
   Object.keys(grouped).forEach(monthYear => {
-    // Month/Year Header
     const header = document.createElement('tr');
     header.className = "bg-amber-50";
     header.innerHTML = `<td colspan="4" class="px-8 py-4 font-semibold text-[#0A3D62]">${monthYear}</td>`;
     tbody.appendChild(header);
 
-    // Sermons in this month
     grouped[monthYear].forEach(s => {
       const row = `
         <tr class="hover:bg-amber-50 transition">
@@ -95,9 +112,9 @@ function renderTableView(filtered) {
           <td class="px-8 py-5">${s.speaker}</td>
           <td class="px-8 py-5 font-medium">${s.title}</td>
           <td class="px-8 py-5">
-            <audio controls class="w-52 accent-amber-500">
-              <source src="${s.audioUrl}" type="audio/mpeg">
-            </audio>
+            <div class="flex flex-wrap gap-2">
+              ${createResourceButtons(s)}
+            </div>
           </td>
         </tr>`;
       tbody.innerHTML += row;
@@ -118,7 +135,6 @@ function groupByMonthYear(sermonsList) {
 
 function filterAndRender() {
   const term = document.getElementById('search-input').value.toLowerCase().trim();
-  
   const filtered = sermons.filter(s => 
     s.title.toLowerCase().includes(term) || 
     s.speaker.toLowerCase().includes(term)
@@ -130,6 +146,6 @@ function filterAndRender() {
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
-  setView('table');                    // Start with Table View
+  setView('table');
   document.getElementById('search-input').addEventListener('input', filterAndRender);
 });

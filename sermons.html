@@ -17,15 +17,14 @@
       color: white;
       box-shadow: 0 2px 4px rgba(10, 61, 98, 0.2);
     }
-    table th {
-      font-weight: 600;
-      color: #0A3D62;
+    .resource-btn {
+      @apply px-4 py-1.5 text-xs font-medium rounded-xl flex items-center gap-1 transition hover:scale-105;
     }
   </style>
 </head>
 <body class="bg-zinc-50 font-sans">
 
-  <!-- Navigation -->
+  <!-- Navigation (same as before) -->
   <nav class="bg-white border-b sticky top-0 z-50 shadow-sm">
     <div class="max-w-7xl mx-auto px-6">
       <div class="flex justify-between items-center h-16">
@@ -82,12 +81,10 @@
     <!-- Toggle + Search -->
     <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-10">
       <div class="flex bg-white rounded-3xl shadow-sm p-1 border border-gray-200">
-        <button onclick="setView('card')" id="card-btn"
-                class="px-6 py-3 rounded-3xl flex items-center gap-2 font-medium">
+        <button onclick="setView('card')" id="card-btn" class="px-6 py-3 rounded-3xl flex items-center gap-2 font-medium">
           <i class="fas fa-th-large"></i> Card View
         </button>
-        <button onclick="setView('table')" id="table-btn"
-                class="px-6 py-3 rounded-3xl flex items-center gap-2 font-medium active-view">
+        <button onclick="setView('table')" id="table-btn" class="px-6 py-3 rounded-3xl flex items-center gap-2 font-medium active-view">
           <i class="fas fa-list"></i> Table View
         </button>
       </div>
@@ -98,9 +95,7 @@
     </div>
 
     <!-- Card View -->
-    <div id="card-view" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <!-- JS populated -->
-    </div>
+    <div id="card-view" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
 
     <!-- Table View (Default) -->
     <div id="table-view">
@@ -110,12 +105,10 @@
             <th class="text-left px-8 py-5 font-semibold">Date</th>
             <th class="text-left px-8 py-5 font-semibold">Speaker</th>
             <th class="text-left px-8 py-5 font-semibold">Title</th>
-            <th class="w-56"></th>
+            <th class="text-left px-8 py-5 font-semibold">Resources</th>
           </tr>
         </thead>
-        <tbody id="table-body" class="divide-y text-sm">
-          <!-- Populated by JavaScript -->
-        </tbody>
+        <tbody id="table-body" class="divide-y text-sm"></tbody>
       </table>
     </div>
   </div>
