@@ -6,8 +6,8 @@ const sermons = [
     title: "Walking by Faith, Not by Sight",
     date: "2025-04-06",
     speaker: "Pastor John Doe",
-    audioUrl: "assets/audio/sermon1.mp3",        // Put real files here later
-    notesUrl: "assets/notes/sermon1.pdf",        // Optional
+    audioUrl: "assets/audio/walking-by-faith.mp3",     // Change to your real file later
+    notesUrl: "assets/notes/walking-by-faith.pdf",
     duration: "45 min"
   },
   {
@@ -15,7 +15,7 @@ const sermons = [
     title: "The Power of the Resurrection",
     date: "2025-04-02",
     speaker: "Pastor John Doe",
-    audioUrl: "assets/audio/sermon2.mp3",
+    audioUrl: "assets/audio/power-of-resurrection.mp3",
     notesUrl: null,
     duration: "52 min"
   },
@@ -24,9 +24,18 @@ const sermons = [
     title: "Grace Upon Grace",
     date: "2025-03-23",
     speaker: "Evangelist Mark Smith",
-    audioUrl: "assets/audio/sermon3.mp3",
-    notesUrl: "assets/notes/sermon3.pdf",
+    audioUrl: "assets/audio/grace-upon-grace.mp3",
+    notesUrl: "assets/notes/grace-upon-grace.pdf",
     duration: "38 min"
+  },
+  {
+    id: 4,
+    title: "The Just Shall Live by Faith",
+    date: "2025-03-16",
+    speaker: "Pastor John Doe",
+    audioUrl: "assets/audio/just-shall-live.mp3",
+    notesUrl: null,
+    duration: "41 min"
   }
 ];
 
@@ -43,23 +52,29 @@ function setView(view) {
   filterAndRender();
 }
 
-// Resource buttons generator
+// Create Resource Buttons
 function createResourceButtons(sermon) {
   let html = '';
 
+  // Audio Button
   if (sermon.audioUrl && sermon.audioUrl !== "#") {
-    html += `<a href="${sermon.audioUrl}" target="_blank" class="resource-btn bg-amber-100 text-amber-700 hover:bg-amber-200">
-               <i class="fas fa-headphones"></i> Audio
-             </a>`;
+    html += `
+      <a href="${sermon.audioUrl}" target="_blank" 
+         class="resource-btn bg-amber-100 hover:bg-amber-200 text-amber-700">
+        <i class="fas fa-headphones"></i> Audio
+      </a>`;
   }
 
+  // Notes Button
   if (sermon.notesUrl) {
-    html += `<a href="${sermon.notesUrl}" target="_blank" class="resource-btn bg-blue-100 text-blue-700 hover:bg-blue-200">
-               <i class="fas fa-file-pdf"></i> Notes
-             </a>`;
+    html += `
+      <a href="${sermon.notesUrl}" target="_blank" 
+         class="resource-btn bg-blue-100 hover:bg-blue-200 text-blue-700">
+        <i class="fas fa-file-pdf"></i> Notes
+      </a>`;
   }
 
-  return html || '<span class="text-gray-400 text-xs">No resources yet</span>';
+  return html || '<span class="text-gray-400 text-xs italic">No resources available yet</span>';
 }
 
 function renderCardView(filtered) {
@@ -68,7 +83,7 @@ function renderCardView(filtered) {
 
   filtered.forEach(s => {
     const card = `
-      <div class="bg-white rounded-3xl shadow-sm overflow-hidden border border-gray-100 hover:shadow-md transition">
+      <div class="bg-white rounded-3xl shadow-sm overflow-hidden border border-gray-100 hover:shadow-md transition-all">
         <div class="p-7">
           <div class="flex justify-between mb-4">
             <span class="text-sm text-amber-600">${s.date}</span>
@@ -77,16 +92,14 @@ function renderCardView(filtered) {
           <h3 class="font-semibold text-xl leading-tight mb-3">${s.title}</h3>
           <p class="text-gray-600 mb-6">${s.speaker}</p>
 
-          <div class="flex flex-wrap gap-2">
+          <div class="flex flex-wrap gap-2 mb-6">
             ${createResourceButtons(s)}
           </div>
 
           ${s.audioUrl ? `
-          <div class="mt-6">
-            <audio controls class="w-full accent-amber-500">
-              <source src="${s.audioUrl}" type="audio/mpeg">
-            </audio>
-          </div>` : ''}
+          <audio controls class="w-full accent-amber-500 rounded-2xl">
+            <source src="${s.audioUrl}" type="audio/mpeg">
+          </audio>` : ''}
         </div>
       </div>`;
     container.innerHTML += card;
@@ -146,6 +159,6 @@ function filterAndRender() {
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
-  setView('table');
+  setView('table');   // Default to Table View
   document.getElementById('search-input').addEventListener('input', filterAndRender);
 });
