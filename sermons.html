@@ -10,10 +10,22 @@
   
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+
+  <style>
+    .active-view {
+      background-color: #0A3D62;
+      color: white;
+      box-shadow: 0 2px 4px rgba(10, 61, 98, 0.2);
+    }
+    table th {
+      font-weight: 600;
+      color: #0A3D62;
+    }
+  </style>
 </head>
 <body class="bg-zinc-50 font-sans">
 
-  <!-- Navigation (same as before) -->
+  <!-- Navigation -->
   <nav class="bg-white border-b sticky top-0 z-50 shadow-sm">
     <div class="max-w-7xl mx-auto px-6">
       <div class="flex justify-between items-center h-16">
@@ -66,42 +78,44 @@
   </header>
 
   <div class="max-w-7xl mx-auto px-6 py-10">
-    <!-- View Toggle + Filters -->
-    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
-      <div class="flex items-center gap-3">
+    
+    <!-- Toggle + Search -->
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-10">
+      <div class="flex bg-white rounded-3xl shadow-sm p-1 border border-gray-200">
         <button onclick="setView('card')" id="card-btn"
-                class="px-5 py-2.5 rounded-2xl flex items-center gap-2 font-medium active-view">
+                class="px-6 py-3 rounded-3xl flex items-center gap-2 font-medium">
           <i class="fas fa-th-large"></i> Card View
         </button>
         <button onclick="setView('table')" id="table-btn"
-                class="px-5 py-2.5 rounded-2xl flex items-center gap-2 font-medium">
+                class="px-6 py-3 rounded-3xl flex items-center gap-2 font-medium active-view">
           <i class="fas fa-list"></i> Table View
         </button>
       </div>
 
-      <input type="text" id="search-input" placeholder="Search sermons..." 
-             class="flex-1 max-w-md px-6 py-3 border border-gray-300 rounded-3xl focus:outline-none focus:border-amber-500">
+      <input type="text" id="search-input" 
+             placeholder="Search by title, speaker or scripture..." 
+             class="flex-1 max-w-md px-6 py-4 border border-gray-300 rounded-3xl focus:outline-none focus:border-amber-500">
     </div>
 
     <!-- Card View -->
-    <div id="card-view" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <!-- Populated by JS -->
+    <div id="card-view" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- JS populated -->
     </div>
 
-    <!-- Table View -->
-    <div id="table-view" class="hidden overflow-x-auto">
+    <!-- Table View (Default) -->
+    <div id="table-view" class="overflow-x-auto">
       <table class="w-full bg-white rounded-3xl shadow-sm overflow-hidden">
-        <thead class="bg-gray-100">
+        <thead class="bg-gray-50">
           <tr>
-            <th class="text-left px-6 py-4 font-medium">Date</th>
-            <th class="text-left px-6 py-4 font-medium">Speaker</th>
-            <th class="text-left px-6 py-4 font-medium">Title</th>
-            <th class="text-left px-6 py-4 font-medium">Scripture</th>
-            <th class="w-48"></th>
+            <th class="text-left px-8 py-5 font-semibold">Date</th>
+            <th class="text-left px-8 py-5 font-semibold">Speaker</th>
+            <th class="text-left px-8 py-5 font-semibold">Title</th>
+            <th class="text-left px-8 py-5 font-semibold">Scripture</th>
+            <th class="w-56"></th>
           </tr>
         </thead>
-        <tbody id="table-body" class="divide-y">
-          <!-- Populated by JS -->
+        <tbody id="table-body" class="divide-y text-sm">
+          <!-- Populated by JavaScript -->
         </tbody>
       </table>
     </div>
